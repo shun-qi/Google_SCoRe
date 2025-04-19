@@ -77,7 +77,7 @@ def stage_one_initialization(model, tokenizer, data, epochs=2, lr=1e-5, beta_kl=
 def stage1_chat_format(example):
     return [
         {"role": "user", "content": example['question']},
-        {"role": "assistant", "content": f"답변: {example.get('original_answer', '')}"}
+        {"role": "assistant", "content": f"答案: {example.get('original_answer', '')}"}
     ]
 
 def stage_two_training_with_reward_shaping(model, tokenizer, data, epochs=3, lr=1e-5, alpha=1.0):
@@ -132,15 +132,16 @@ def stage_two_training_with_reward_shaping(model, tokenizer, data, epochs=3, lr=
 def stage2_chat_format(example):
     return [
         {"role": "user", "content": example['question']},
-        {"role": "assistant", "content": f"첫 번째 답변: {example.get('original_answer', '')}"},
-        {"role": "user", "content": "이 답변을 다시 한 번 검토해주세요."},
-        {"role": "assistant", "content": "검토 후 답변: "}
+        {"role": "assistant", "content": f"第一次回答: {example.get('original_answer', '')}"},
+        {"role": "user", "content": "请再次审核此回答。"},
+        {"role": "assistant", "content": "审核后回答: "}
+
     ]
 
 def chat_format(example):
     return [
         {"role": "user", "content": example['question']},
-        {"role": "assistant", "content": f"최종 답변: {example.get('correct_answer', '')}"}
+        {"role": "assistant", "content": f"最终回答: {example.get('correct_answer', '')}"}
     ]
 
 # Main function to run the training process
